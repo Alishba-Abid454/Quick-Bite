@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const { NODE_ENV, CORS_ORIGIN } = require('./config/env');
+const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 // Initialize Express app
 const app = express();
@@ -47,8 +48,14 @@ app.get('/api/health', (req, res) => {
     message: 'Server is running',
     timestamp: new Date().toISOString(),
     environment: NODE_ENV,
+    version: '1.0.0',
   });
 });
+// 404 Not Found handler - MUST be last route
+app.use(notFound);
+
+// Global error handler - MUST be last middleware
+app.use(errorHandler);
 
 // ============ ERROR HANDLING ============
 // Error handling middleware (will be added later)
