@@ -123,22 +123,16 @@ const ReviewSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// ============================================
 // Indexes for Faster Queries
-// ============================================
 ReviewSchema.index({ restaurantId: 1, createdAt: -1 });
 ReviewSchema.index({ restaurantId: 1, rating: -1 });
 ReviewSchema.index({ userId: 1, createdAt: -1 });
 ReviewSchema.index({ orderId: 1 }, { unique: true });
 
-// ============================================
 // Compound Indexes
-// ============================================
 ReviewSchema.index({ restaurantId: 1, isApproved: 1 });
 
-// ============================================
 // Pre-Save Middleware
-// ============================================
 
 // Auto-calculate average rating if all sub-ratings exist
 ReviewSchema.pre('save', function (next) {
@@ -150,9 +144,7 @@ ReviewSchema.pre('save', function (next) {
   next();
 });
 
-// ============================================
 // Post-Save Middleware
-// ============================================
 
 // Update restaurant rating after review is saved
 ReviewSchema.post('save', async function () {
@@ -182,9 +174,7 @@ ReviewSchema.post('remove', async function () {
   }
 });
 
-// ============================================
 // Instance Methods
-// ============================================
 
 /**
  * Check if user can edit this review
@@ -230,9 +220,7 @@ ReviewSchema.methods.unmarkHelpful = async function (userId) {
   return this;
 };
 
-// ============================================
 // Static Methods
-// ============================================
 
 /**
  * Get reviews for a restaurant with filters
@@ -374,7 +362,4 @@ ReviewSchema.statics.getUserReviews = async function (userId, page = 1, limit = 
   };
 };
 
-// ============================================
-// Export Model
-// ============================================
 module.exports = mongoose.model('Review', ReviewSchema);

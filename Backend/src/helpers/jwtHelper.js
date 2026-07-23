@@ -19,7 +19,7 @@ const signToken = (payload, expiresIn = JWT_EXPIRE) => {
     if (!JWT_SECRET) {
       throw new Error('JWT_SECRET is not defined');
     }
-    return jwt.sign(payload, JWT_SECRET, { expiresIn });
+    return jwt.sign(payload, JWT_SECRET, { expiresIn }); //generate token
   } catch (error) {
     throw new Error(`Token signing failed: ${error.message}`);
   }
