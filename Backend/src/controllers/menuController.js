@@ -46,9 +46,15 @@ const createMenuItem = async (req, res, next) => {
     const { restaurantId, ...itemData } = req.body;
     const userId = req.user._id;
     const role = req.user.role;
+    console.log("========== CREATE MENU ==========");
+    console.log("Body:", req.body);
+    console.log("Restaurant ID:", restaurantId);
+    console.log("User ID:", req.user._id);
 
-    // Check if restaurant exists
     const restaurant = await Restaurant.findById(restaurantId);
+
+    console.log("Restaurant Found:", restaurant);
+    console.log("================================");
     if (!restaurant) {
       throw new ApiError(HTTP_STATUS.NOT_FOUND, 'Restaurant not found');
     }

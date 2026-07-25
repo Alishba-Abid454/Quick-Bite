@@ -205,12 +205,12 @@ MenuItemSchema.index({ restaurantId: 1, category: 1, available: 1 });
 // Pre-Save Middleware
 
 // Auto-update isOutOfStock based on stock
-MenuItemSchema.pre('save', function (next) {
+MenuItemSchema.pre('save', function () {
+
   if (this.isModified('stock')) {
     this.isOutOfStock = this.stock <= 0;
   }
 
-  // Calculate discount percentage
   if (this.originalPrice && this.price < this.originalPrice) {
     this.discountPercentage = Math.round(
       ((this.originalPrice - this.price) / this.originalPrice) * 100
@@ -219,7 +219,6 @@ MenuItemSchema.pre('save', function (next) {
     this.discountPercentage = 0;
   }
 
-  next();
 });
 
 // Instance Methods

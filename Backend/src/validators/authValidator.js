@@ -61,7 +61,7 @@ const signupSchema = Joi.object({
     }),
 
   role: Joi.string()
-    .valid('customer', 'restaurant_owner')
+    .valid('customer', 'restaurant_owner','admin')
     .default('customer'),
 });
 

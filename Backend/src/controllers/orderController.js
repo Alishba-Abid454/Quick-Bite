@@ -9,6 +9,7 @@ const { processOrder, canCancelOrder, getOrderTimeline } = require('../services/
 const { successResponse, errorResponse, paginatedResponse } = require('../helpers/responseHelper');
 const { HTTP_STATUS } = require('../utils/constants');
 const ApiError = require('../utils/ApiError');
+const MenuItem = require('../models/MenuItem');
 
 /**
  * @desc    Place a new order
@@ -149,6 +150,12 @@ const updateOrderStatus = async (req, res, next) => {
       updateData.cancelledBy = role === 'admin' ? 'admin' : 'restaurant';
     }
 
+    if (order.status === status) {
+        throw new ApiError(
+            HTTP_STATUS.BAD_REQUEST,
+            `Order is already ${status}`
+        );
+    }
     // Update status
     await order.updateStatus(status, updateData);
 
@@ -182,26 +189,44 @@ const cancelOrder = async (req, res, next) => {
 
     // Find order
     const order = await Order.findById(orderId);
+
     if (!order) {
-      throw new ApiError(HTTP_STATUS.NOT_FOUND, 'Order not found');
+      throw new ApiError(
+        HTTP_STATUS.NOT_FOUND,
+        'Order not found'
+      );
     }
 
-    // Check if order can be cancelled
-    if (!canCancelOrder(order, userId, role)) {
-      throw new ApiError(HTTP_STATUS.BAD_REQUEST, 'Order cannot be cancelled at this stage');
-    }
+// Already cancelled
+if (order.status === 'cancelled') {
+    throw new ApiError(
+        HTTP_STATUS.BAD_REQUEST,
+        'Order is already cancelled'
+    );
+}
 
-    // Update status to cancelled
+// Cannot cancel
+  if (!canCancelOrder(order, userId, role)) {
+      throw new ApiError(
+          HTTP_STATUS.BAD_REQUEST,
+          'Order cannot be cancelled at this stage'
+      );
+  }
+
+    // Update order status
     await order.updateStatus('cancelled', {
       reason: reason || 'Cancelled by user',
       cancelledBy: role === 'admin' ? 'admin' : 'user',
     });
 
-    // Restore stock
+    // Restore menu stock
     for (const item of order.items) {
-      await MenuItem.findByIdAndUpdate(item.menuItemId, {
-        $inc: { stock: item.quantity },
-      });
+      const menuItem = await MenuItem.findById(item.menuItemId);
+
+      if (menuItem) {
+        menuItem.stock += item.quantity;
+        await menuItem.save(); // pre('save') middleware runs
+      }
     }
 
     return successResponse(
@@ -210,11 +235,11 @@ const cancelOrder = async (req, res, next) => {
       { order },
       'Order cancelled successfully'
     );
+
   } catch (error) {
     next(error);
   }
 };
-
 /**
  * @desc    Get restaurant orders (for restaurant owner)
  * @route   GET /api/orders/restaurant/:restaurantId

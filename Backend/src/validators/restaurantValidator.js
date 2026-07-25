@@ -316,6 +316,14 @@ const restaurantIdParamSchema = Joi.object({
  * Create menu item validation schema
  */
 const createMenuItemSchema = Joi.object({
+  restaurantId: Joi.string()
+    .required()
+    .pattern(/^[0-9a-fA-F]{24}$/)
+    .messages({
+      'string.empty': 'Restaurant ID is required',
+      'string.pattern.base': 'Invalid Restaurant ID',
+    }),
+
   name: Joi.string()
     .required()
     .trim()

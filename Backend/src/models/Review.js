@@ -127,7 +127,6 @@ const ReviewSchema = new mongoose.Schema({
 ReviewSchema.index({ restaurantId: 1, createdAt: -1 });
 ReviewSchema.index({ restaurantId: 1, rating: -1 });
 ReviewSchema.index({ userId: 1, createdAt: -1 });
-ReviewSchema.index({ orderId: 1 }, { unique: true });
 
 // Compound Indexes
 ReviewSchema.index({ restaurantId: 1, isApproved: 1 });
@@ -135,13 +134,21 @@ ReviewSchema.index({ restaurantId: 1, isApproved: 1 });
 // Pre-Save Middleware
 
 // Auto-calculate average rating if all sub-ratings exist
-ReviewSchema.pre('save', function (next) {
-  if (this.isModified('foodQuality') || this.isModified('deliverySpeed') ||
-      this.isModified('packaging') || this.isModified('valueForMoney')) {
-    const total = this.foodQuality + this.deliverySpeed + this.packaging + this.valueForMoney;
+ReviewSchema.pre('save', function () {
+  if (
+    this.isModified('foodQuality') ||
+    this.isModified('deliverySpeed') ||
+    this.isModified('packaging') ||
+    this.isModified('valueForMoney')
+  ) {
+    const total =
+      this.foodQuality +
+      this.deliverySpeed +
+      this.packaging +
+      this.valueForMoney;
+
     this.rating = Math.round((total / 4) * 10) / 10;
   }
-  next();
 });
 
 // Post-Save Middleware

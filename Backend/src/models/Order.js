@@ -12,9 +12,7 @@ const {
   PAYMENT_STATUS,
 } = require('../utils/constants');
 
-// ============================================
 // Order Item Sub-Schema
-// ============================================
 const OrderItemSchema = new mongoose.Schema({
   menuItemId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -57,9 +55,7 @@ const OrderItemSchema = new mongoose.Schema({
   },
 });
 
-// ============================================
 // Main Order Schema
-// ============================================
 const OrderSchema = new mongoose.Schema({
   // ===== Order Identifier =====
   orderId: {
@@ -278,7 +274,6 @@ const OrderSchema = new mongoose.Schema({
 });
 
 // Indexes for Faster Queries
-OrderSchema.index({ orderId: 1 });
 OrderSchema.index({ userId: 1, createdAt: -1 });
 OrderSchema.index({ restaurantId: 1, createdAt: -1 });
 OrderSchema.index({ status: 1, createdAt: -1 });
@@ -292,19 +287,21 @@ OrderSchema.index({ restaurantId: 1, status: 1 });
 // Pre-Save Middleware
 
 // Calculate subtotal for each item before saving
-OrderSchema.pre('save', function (next) {
+OrderSchema.pre('save', function () {
   if (this.isModified('items')) {
     this.items.forEach((item) => {
       item.subtotal = item.price * item.quantity;
     });
   }
-  next();
 });
 
 /**
  * Update order status with automatic timestamp
  */
 OrderSchema.methods.updateStatus = async function (newStatus, data = {}) {
+  if (this.status === newStatus) {
+    throw new Error(`Order is already ${newStatus}`);
+}
   // Validate status transition
   if (!ORDER_STATUS_TRANSITIONS[this.status]) {
     throw new Error(`Invalid current status: ${this.status}`);
@@ -361,7 +358,7 @@ OrderSchema.methods.updateStatus = async function (newStatus, data = {}) {
  * Check if order can be cancelled
  */
 OrderSchema.methods.canBeCancelled = function () {
-  const cancellableStatuses = [ORDER_STATUS.PENDING, ORDER_STATUS.CONFIRMED];
+  const cancellableStatuses = [ORDER_STATUS.PENDING, ORDER_STATUS.CONFIRMED, ORDER_STATUS.PREPARING ];
   return cancellableStatuses.includes(this.status);
 };
 

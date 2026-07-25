@@ -6,6 +6,14 @@ const morgan = require('morgan');
 const { NODE_ENV, CORS_ORIGIN } = require('./config/env');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
+// Import Routes
+const authRoutes = require('./routes/authRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const restaurantRoutes = require('./routes/restaurantRoutes');
+const menuRoutes = require('./routes/menuRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
+const userRoutes = require('./routes/userRoutes');
+
 // Initialize Express app
 const app = express();
 
@@ -38,9 +46,6 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // 5. Static Files (for uploaded images)
 app.use('/uploads', express.static('uploads'));
 
-// ============ ROUTES ============
-// We'll add routes in later days
-
 // Test Route - To check if server is working
 app.get('/api/health', (req, res) => {
   res.status(200).json({
@@ -51,6 +56,15 @@ app.get('/api/health', (req, res) => {
     version: '1.0.0',
   });
 });
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/menu', menuRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/users', userRoutes);
+
 // 404 Not Found handler - MUST be last route
 app.use(notFound);
 

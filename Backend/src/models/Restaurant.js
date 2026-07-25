@@ -6,9 +6,7 @@
 const mongoose = require('mongoose');
 const { CUISINE_TYPES } = require('../utils/constants');
 
-// ============================================
 // Restaurant Schema
-// ============================================
 const RestaurantSchema = new mongoose.Schema({
   // ===== Basic Info =====
   name: {
@@ -176,17 +174,13 @@ const RestaurantSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// ============================================
 // Indexes for Faster Queries
-// ============================================
 RestaurantSchema.index({ name: 'text', cuisineType: 'text' });
 RestaurantSchema.index({ rating: -1 });
 RestaurantSchema.index({ isOpen: 1, isActive: 1 });
 RestaurantSchema.index({ coordinates: '2dsphere' });
 
-// ============================================
 // Instance Methods
-// ============================================
 
 /**
  * Update restaurant rating based on all reviews
@@ -242,9 +236,7 @@ RestaurantSchema.methods.isCurrentlyOpen = function () {
   return this.isOpen;
 };
 
-// ============================================
 // Static Methods
-// ============================================
 
 /**
  * Get restaurants with pagination and filters
