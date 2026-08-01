@@ -132,5 +132,58 @@ export const theme = {
   },
 };
 
-export default theme;// client/src/styles/theme.js
+// CSS Variables as string for GlobalStyles
+export const cssVariables = `
+  :root {
+    --primary: ${theme.colors.primary};
+    --primary-dark: ${theme.colors.primaryDark};
+    --primary-light: ${theme.colors.primaryLight};
+    --secondary: ${theme.colors.secondary};
+    --secondary-light: ${theme.colors.secondaryLight};
+    --success: ${theme.colors.success};
+    --success-light: ${theme.colors.successLight};
+    --warning: ${theme.colors.warning};
+    --warning-light: ${theme.colors.warningLight};
+    --danger: ${theme.colors.danger};
+    --danger-light: ${theme.colors.dangerLight};
+    --info: ${theme.colors.info};
+    --info-light: ${theme.colors.infoLight};
+    --white: ${theme.colors.white};
+    --black: ${theme.colors.black};
+    --text: ${theme.colors.text};
+    --text-muted: ${theme.colors.textMuted};
+    --text-light: ${theme.colors.textLight};
+    --background: ${theme.colors.background};
+    --background-white: ${theme.colors.backgroundWhite};
+    --scroll-track: ${theme.colors.scrollTrack};
+    --scroll-thumb: ${theme.colors.scrollThumb};
+    --scroll-thumb-hover: ${theme.colors.scrollThumbHover};
+    --border: ${theme.colors.border};
+    --border-focus: ${theme.colors.borderFocus};
+    --shadow: ${theme.colors.shadow};
 
+    --spacing-xs: ${theme.spacing.xs};
+    --spacing-sm: ${theme.spacing.sm};
+    --spacing-md: ${theme.spacing.md};
+    --spacing-lg: ${theme.spacing.lg};
+    --spacing-xl: ${theme.spacing.xl};
+
+    --radius-sm: ${theme.borderRadius.sm};
+    --radius-md: ${theme.borderRadius.md};
+    --radius-lg: ${theme.borderRadius.lg};
+    --radius-xl: ${theme.borderRadius.xl};
+    --radius-full: ${theme.borderRadius.full};
+
+    --shadow-sm: ${theme.shadows.sm};
+    --shadow-md: ${theme.shadows.md};
+    --shadow-lg: ${theme.shadows.lg};
+    --shadow-xl: ${theme.shadows.xl};
+    --shadow-2xl: ${theme.shadows['2xl']};
+
+    --transition-fast: ${theme.transitions.fast};
+    --transition-normal: ${theme.transitions.normal};
+    --transition-slow: ${theme.transitions.slow};
+  }
+`;
+
+export default theme;

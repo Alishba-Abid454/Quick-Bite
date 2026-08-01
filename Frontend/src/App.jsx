@@ -9,13 +9,13 @@ import GlobalStyles from './styles/GlobalStyles';
 
 export default function App() {
   return (
-    <AuthProvider>           // ← User authentication state
-      <CartProvider>         // ← Shopping cart state
-        <RestaurantProvider> // ← Restaurant data state
-          <OrderProvider>    // ← Order state
-            <GlobalStyles /> // ← Global CSS
-            <AppRouter />    // ← All routes/pages
-            <ToastContainer // ← Notification popups
+    <AuthProvider>           
+      <CartProvider>         
+        <RestaurantProvider> 
+          <OrderProvider>    
+            <GlobalStyles /> 
+            <AppRouter />    
+            <ToastContainer 
               position="top-right"
               autoClose={3000}
               hideProgressBar={false}

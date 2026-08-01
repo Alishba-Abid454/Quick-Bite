@@ -2,13 +2,20 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react()],           // ← Enable React support
+  plugins: [react()],
+  css: {
+    postcss: null,
+    preprocessorOptions: {},
+  },
   server: {
-    port: 5173,                 // ← Dev server port
-    open: true,                 // ← Auto-open browser
+    port: 5173,
+    open: true,
+    hmr: {
+      overlay: false,
+    },
   },
   build: {
-    outDir: 'dist',             // ← Output folder
-    sourcemap: true,            // ← Debugging maps
+    outDir: 'dist',
+    sourcemap: true,
   },
 });
