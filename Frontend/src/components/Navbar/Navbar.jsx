@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { ROUTES } from '../../utils/routes';
+import { ShoppingBag } from "lucide-react";
 import {
   NavbarContainer,
   NavbarInner,
@@ -52,12 +53,14 @@ const Navbar = () => {
           <NavLink to={ROUTES.HOME}>Home</NavLink>
           <NavLink to={ROUTES.ABOUT}>About</NavLink>
           <NavLink to={ROUTES.CONTACT}>Contact</NavLink>
+          <NavLink to={ROUTES.ORDERS}>My Orders</NavLink>
         </NavLinks>
 
         {/* Actions */}
         <NavActions>
           <CartButton to={ROUTES.CART}>
-            🛒 Cart
+            <ShoppingBag size={20} />
+             Cart
             {itemCount > 0 && <CartBadge>{itemCount}</CartBadge>}
           </CartButton>
 

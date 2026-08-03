@@ -22,13 +22,19 @@ export const Card = styled.div`
   }
 `;
 
+// RestaurantCard.styles.js
+// RestaurantCard.styles.js
 export const CardImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: 200px !important;
+  min-height: 200px !important;  /* ← Add this */
+  max-height: 200px !important;  /* ← Add this */
   object-fit: cover;
   background: var(--gray100);
+  display: block !important;      /* ← Add this */
+  visibility: visible !important; /* ← Add this */
+  opacity: 1 !important;          /* ← Add this */
 `;
-
 export const CardBadge = styled.div`
   position: absolute;
   top: 12px;

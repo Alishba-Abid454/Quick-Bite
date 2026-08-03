@@ -34,11 +34,18 @@ const RestaurantCard = ({ restaurant }) => {
     isOpen,
   } = restaurant;
 
+  console.log("Restaurant:", restaurant);
+  console.log("Image:", image);
   return (
     <Link to={routeHelpers.restaurantDetails(_id)}>
       <Card>
-        <CardImage src={image || 'https://via.placeholder.com/400x300'} alt={name} />
-        {!isOpen && <CardBadge>Closed</CardBadge>}
+      <CardImage
+        src={image}
+        alt={name}
+        onLoad={() => console.log("Loaded")}
+        onError={() => console.log("Failed")}
+      />
+      {!isOpen && <CardBadge>Closed</CardBadge>}
 
         <CardContent>
           <CardHeader>

@@ -41,10 +41,18 @@ export const Styling = css`
     color: var(--primary);
   }
 
-  img {
+  /* ✅ Only apply to regular images, not styled components */
+  img:not([class*="CardImage"]) {
     max-width: 100%;
     display: block;
     height: auto;
+  }
+
+  /* Force all images to show */
+  img {
+    display: block !important;
+    min-height: 50px !important;
+    max-width: 100% !important;
   }
 
   ul,

@@ -1,10 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-//Router is a component that provides routing functionality to your app. It's the parent of all routes.
-//Routes is a container component that holds all your <Route> components
-//Route is a component that maps a specific URL path to a specific component.
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-
-// Layouts
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 
@@ -12,24 +7,28 @@ import AuthLayout from './layouts/AuthLayout';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Signup from './pages/Signup/Signup';
-import RestaurantDetails from './pages/RestaurantDetails/RestaurantDetails';
+import NotFound from './pages/NotFound/NotFound';
 import Cart from './pages/Cart/Cart';
 import Checkout from './pages/Checkout/Checkout';
+import Orders from './pages/Orders/Orders';
 import OrderSuccess from './pages/OrderSuccess/OrderSuccess';
 import OrderTracking from './pages/OrderTracking/OrderTracking';
-import Orders from './pages/Orders/Orders';
 import Profile from './pages/Profile/Profile';
-import NotFound from './pages/NotFound/NotFound';
+import ChangePassword from './pages/Profile/ChangePassword';
+import RestaurantDetails from './pages/RestaurantDetails/RestaurantDetails';
 
-// Auth Helper (temporary - will be replaced with useAuth later)
+// ============================================
+// Temporary Auth Check
+// ============================================
 const isAuthenticated = () => {
-  return !!localStorage.getItem('token'); // check token exist in browser sorage and convert into boolean
+  return !!localStorage.getItem('food_app_token');
 };
 
 export default function AppRouter() {
   return (
     <Router>
       <Routes>
+        {/* ==================== AUTH ROUTES ==================== */}
         <Route
           path="/login"
           element={
@@ -57,14 +56,12 @@ export default function AppRouter() {
         />
 
         {/* ==================== PUBLIC ROUTES ==================== */}
-        //Anyone can view restaurants and their menus
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/restaurant/:id" element={<RestaurantDetails />} />
         </Route>
 
         {/* ==================== PROTECTED ROUTES ==================== */}
-        {/*must be logged in*/}
         <Route element={<MainLayout />}>
           <Route
             path="/cart"
@@ -74,7 +71,6 @@ export default function AppRouter() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/checkout"
             element={
@@ -83,25 +79,6 @@ export default function AppRouter() {
               </ProtectedRoute>
             }
           />
-
-          <Route
-            path="/order-success/:id"
-            element={
-              <ProtectedRoute>
-                <OrderSuccess />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="/order-tracking/:id"
-            element={
-              <ProtectedRoute>
-                <OrderTracking />
-              </ProtectedRoute>
-            }
-          />
-
           <Route
             path="/orders"
             element={
@@ -110,12 +87,35 @@ export default function AppRouter() {
               </ProtectedRoute>
             }
           />
-
           <Route
             path="/profile"
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile/change-password"
+            element={
+              <ProtectedRoute>
+                <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/order-success/:id"
+            element={
+              <ProtectedRoute>
+                <OrderSuccess />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/order-tracking/:id"
+            element={
+              <ProtectedRoute>
+                <OrderTracking />
               </ProtectedRoute>
             }
           />

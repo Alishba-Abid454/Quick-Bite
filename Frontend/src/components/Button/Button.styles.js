@@ -89,17 +89,17 @@ const sizeStyles = {
   sm: css`
     padding: 8px 16px;
     font-size: 14px;
-    border-radius: var(--radius-sm);
+  border-radius: 999px;
   `,
   md: css`
     padding: 12px 24px;
     font-size: 16px;
-    border-radius: var(--radius-md);
+  border-radius: 999px;
   `,
   lg: css`
     padding: 16px 32px;
     font-size: 18px;
-    border-radius: var(--radius-lg);
+    border-radius: 999px;
   `,
 };
 
@@ -112,6 +112,7 @@ export const StyledButton = styled.button`
   transition: all var(--transition-normal);
   cursor: pointer;
   position: relative;
+  
   width: ${({ fullWidth }) => (fullWidth ? '100%' : 'auto')};
   min-height: ${({ size }) => {
     switch (size) {

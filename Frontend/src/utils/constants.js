@@ -14,6 +14,16 @@ export const ORDER_STATUS = {
   CANCELLED: 'cancelled',
 };
 
+export const ORDER_STATUS_ICONS = {
+  pending: '🕒',
+  confirmed: '✅',
+  preparing: '👨‍🍳',
+  ready: '📦',
+  out_for_delivery: '🚚',
+  delivered: '🎉',
+  cancelled: '❌',
+};
+
 export const ORDER_STATUS_LABELS = {
   [ORDER_STATUS.PENDING]: 'Order Placed',
   [ORDER_STATUS.CONFIRMED]: 'Order Confirmed',
