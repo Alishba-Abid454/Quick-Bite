@@ -6,6 +6,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { routeHelpers } from '../../utils/routes';
+import { getRestaurantImage } from '../../helpers/imageHelper';
 import {
   Card,
   CardImage,
@@ -34,18 +35,20 @@ const RestaurantCard = ({ restaurant }) => {
     isOpen,
   } = restaurant;
 
-  console.log("Restaurant:", restaurant);
-  console.log("Image:", image);
+  // Get correct image URL
+  const imageUrl = getRestaurantImage(image);
+
   return (
     <Link to={routeHelpers.restaurantDetails(_id)}>
       <Card>
-      <CardImage
-        src={image}
-        alt={name}
-        onLoad={() => console.log("Loaded")}
-        onError={() => console.log("Failed")}
-      />
-      {!isOpen && <CardBadge>Closed</CardBadge>}
+        <CardImage
+          src={imageUrl}
+          alt={name}
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
+          }}
+        />
+        {!isOpen && <CardBadge>Closed</CardBadge>}
 
         <CardContent>
           <CardHeader>

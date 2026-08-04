@@ -23,10 +23,12 @@ const ProtectedRoute = ({ children, requiredRole = null }) => {
   }
 
   // Check role if required
-  if (requiredRole && user?.role !== requiredRole) {
-    return <Navigate to={ROUTES.HOME} replace />;
-  }
-
+if (
+  requiredRole === "admin" &&
+  user?.email !== "admin@quickbite.com"
+) {
+  return <Navigate to={ROUTES.HOME} replace />;
+}
   return children;
 };
 

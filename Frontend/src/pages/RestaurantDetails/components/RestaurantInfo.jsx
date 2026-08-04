@@ -30,12 +30,12 @@ const RestaurantInfo = ({ restaurant }) => {
     rating,
     totalReviews,
     deliveryTime,
-    priceLevel,
   } = restaurant;
 
   return (
     <Container>
-    
+      {/* Back Link */}
+
       <ContentGrid>
         {/* LEFT COLUMN: Name, Cuisine, Description, Stats */}
         <LeftColumn>
@@ -67,6 +67,10 @@ const RestaurantInfo = ({ restaurant }) => {
               <StatValue>{deliveryTime || '25–35'} min</StatValue>
             </StatItem>
 
+            {/* Agar aapke paas price level data hai toh isko use karein, warna hata dein */}
+            <StatItem>
+              <StatValue>$$</StatValue> 
+            </StatItem>
           </StatsRow>
         </LeftColumn>
 

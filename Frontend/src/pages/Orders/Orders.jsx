@@ -138,7 +138,7 @@ const Orders = () => {
           {statusFilters.map((filter) => (
             <FilterButton
               key={filter.value}
-              active={activeFilter === filter.value}
+              active={(activeFilter === filter.value).toString()}
               onClick={() => handleFilterChange(filter.value)}
             >
               {filter.label}

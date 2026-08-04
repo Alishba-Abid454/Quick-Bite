@@ -17,11 +17,29 @@ import Profile from './pages/Profile/Profile';
 import ChangePassword from './pages/Profile/ChangePassword';
 import RestaurantDetails from './pages/RestaurantDetails/RestaurantDetails';
 
+// Admin Pages
+import AdminLayout from './pages/Admin/AdminLayout/AdminLayout';
+import AdminDashboard from './pages/Admin/AdminDashboard/AdminDashboard';
+import AdminRestaurants from './pages/Admin/AdminRestaurants/AdminRestaurants';
+import AdminRestaurantCreate from './pages/Admin/AdminRestaurants/AdminRestaurantCreate';
+import AdminRestaurantEdit from './pages/Admin/AdminRestaurants/AdminRestaurantEdit';
+
 // ============================================
-// Temporary Auth Check
+// Auth Check
 // ============================================
 const isAuthenticated = () => {
   return !!localStorage.getItem('food_app_token');
+};
+
+const isAdmin = () => {
+  const userStr = localStorage.getItem('food_app_user');
+  if (!userStr) return false;
+  try {
+    const user = JSON.parse(userStr);
+    return user.role === 'admin';
+  } catch {
+    return false;
+  }
 };
 
 export default function AppRouter() {
@@ -119,6 +137,21 @@ export default function AppRouter() {
               </ProtectedRoute>
             }
           />
+        </Route>
+
+        {/* ==================== ADMIN ROUTES ==================== */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<AdminDashboard />} />
+          <Route path="restaurants" element={<AdminRestaurants />} />
+          <Route path="restaurants/create" element={<AdminRestaurantCreate />} />
+          <Route path="restaurants/:id/edit" element={<AdminRestaurantEdit />} />
         </Route>
 
         {/* ==================== 404 ROUTE ==================== */}

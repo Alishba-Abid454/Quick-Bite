@@ -8,7 +8,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 import { ROUTES } from '../../utils/routes';
+import UserMenu from "../UserMenu/UserMenu";
 import { ShoppingBag } from "lucide-react";
+import {
+  User,
+  ReceiptText,
+  LogOut,
+  ChevronDown,
+} from "lucide-react";
 import {
   NavbarContainer,
   NavbarInner,
@@ -26,6 +33,7 @@ import {
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const isAdmin = user?.email === "admin@quickbite.com";
   const { itemCount } = useCart();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -54,6 +62,9 @@ const Navbar = () => {
           <NavLink to={ROUTES.ABOUT}>About</NavLink>
           <NavLink to={ROUTES.CONTACT}>Contact</NavLink>
           <NavLink to={ROUTES.ORDERS}>My Orders</NavLink>
+          {isAuthenticated && isAdmin && (
+            <NavLink to={ROUTES.ADMIN}>Admin</NavLink>
+          )}
         </NavLinks>
 
         {/* Actions */}
@@ -64,13 +75,22 @@ const Navbar = () => {
             {itemCount > 0 && <CartBadge>{itemCount}</CartBadge>}
           </CartButton>
 
-        <Link className="login-link" to={ROUTES.LOGIN}>
-            Log in
-          </Link>
+        {isAuthenticated ? (
+          <UserMenu
+            user={user}
+            onLogout={handleLogout}
+          />
+        ) : (
+          <>
+            <Link className="login-link" to={ROUTES.LOGIN}>
+              Log in
+            </Link>
 
-          <Link className="signup-btn" to={ROUTES.SIGNUP}>
-            Sign up
-          </Link>
+            <Link className="signup-btn" to={ROUTES.SIGNUP}>
+              Sign up
+            </Link>
+          </>
+        )}
 
           <MobileMenuButton onClick={toggleMobileMenu}>
             ☰
