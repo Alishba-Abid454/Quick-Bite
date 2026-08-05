@@ -73,6 +73,7 @@ const navItems = [
             <SidebarNavItem key={item.path}>
               <SidebarNavLink
                 to={item.path}
+                end={item.path === "/admin"}
                 onClick={() => setIsMobileOpen(false)}
               >
                 <SidebarNavIcon>{item.icon}</SidebarNavIcon>

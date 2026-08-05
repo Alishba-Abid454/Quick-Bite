@@ -77,8 +77,17 @@ const protect = async (req, res, next) => {
     }
 
     // 6. Attach user to request
+    //req.user = user;
+    //next(); //Pass control to next middleware/route
+      // 6. Attach user to request
     req.user = user;
-    next(); //Pass control to next middleware/route
+
+    console.log("========== AUTH ==========");
+    console.log("Email:", req.user.email);
+    console.log("Role :", req.user.role);
+    console.log("==========================");
+
+    next();
   } catch (error) {
     return errorResponse(
       res,
@@ -105,7 +114,8 @@ const authorize = (...roles) => { //Spread operator - accepts multiple role name
           'Not authorized. User not found.'
         );
       }
-
+    console.log("Allowed Roles:", roles);
+    console.log("Current Role :", req.user.role);
       // Check if user role is allowed
       if (!roles.includes(req.user.role)) {
         return errorResponse(

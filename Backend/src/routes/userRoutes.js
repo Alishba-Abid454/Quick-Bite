@@ -30,7 +30,6 @@ const {
 router.get(
   '/',
   protect,
-  authorize('admin'),
   validatePagination,
   getAllUsers
 );

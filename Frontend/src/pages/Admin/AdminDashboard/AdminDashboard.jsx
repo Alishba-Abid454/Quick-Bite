@@ -130,7 +130,7 @@ const AdminDashboard = () => {
             {recentOrders.map((order) => (
               <ActivityItem key={order._id}>
                 <ActivityItemText>
-                  Order #{order.orderId || order._id.slice(-6)} - 
+                  Order #{order.orderId || order._id.slice(-6)} -   
                   {order.restaurantId?.name || 'Restaurant'} - 
                   {formatPrice(order.totalPrice)}
                 </ActivityItemText>

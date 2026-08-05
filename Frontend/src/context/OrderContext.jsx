@@ -66,6 +66,8 @@ export const OrderProvider = ({ children }) => {
 
       if (response.success) {
         setOrders(response.data);
+        console.log("Orders:", response.data);
+        console.log("Orders:", response.data);
         setPagination({
           page: response.pagination?.page || page,
           limit: response.pagination?.limit || limit,
@@ -84,6 +86,7 @@ export const OrderProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
+    
   };
 
   // Get Order by ID
@@ -93,7 +96,8 @@ export const OrderProvider = ({ children }) => {
       setError(null);
 
       const response = await orderService.getOrderById(orderId);
-
+      console.log("Orders API Response:", response);
+      
       if (response.success) {
         setCurrentOrder(response.data.order);
         return { success: true, order: response.data.order };

@@ -43,10 +43,38 @@ const placeOrder = async (req, res, next) => {
 const getOrders = async (req, res, next) => {
   try {
     const userId = req.user._id;
-    const { page = 1, limit = 10, status, startDate, endDate, sortBy } = req.query;
+    const role = req.user.role;
 
-    const filters = { status, startDate, endDate, sortBy };
-    const result = await Order.getUserOrders(userId, filters, page, limit);
+    const {
+      page = 1,
+      limit = 10,
+      status,
+      startDate,
+      endDate,
+      sortBy,
+    } = req.query;
+
+    const filters = {
+      status,
+      startDate,
+      endDate,
+      sortBy,
+    };
+
+    console.log("Role:", role);
+
+    let result;
+
+    if (role === "admin") {
+      result = await Order.getAllOrders(filters, page, limit);
+    } else {
+      result = await Order.getUserOrders(
+        userId,
+        filters,
+        page,
+        limit
+      );
+    }
 
     return paginatedResponse(
       res,
@@ -54,7 +82,7 @@ const getOrders = async (req, res, next) => {
       result.pagination.page,
       result.pagination.limit,
       result.pagination.total,
-      'Orders fetched successfully'
+      "Orders fetched successfully"
     );
   } catch (error) {
     next(error);

@@ -22,8 +22,8 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-size: 45px;
-  font-weight: 650;
+  font-size: 30px;
+  font-weight: 700;
   color: #1e293b;
 `;
 
@@ -107,8 +107,8 @@ export const RestaurantTop = styled.div`
 `;
 
 export const RestaurantName = styled.h2`
-  font-size: 28px;
-  font-weight: 650;
+  font-size: 24px;
+  font-weight: 600;
   color: #1e293b;
 `;
 

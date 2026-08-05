@@ -573,4 +573,52 @@ OrderSchema.statics.getOrderStats = async function (restaurantId = null) {
   };
 };
 
+/**
+ * Get all orders (Admin)
+ */
+OrderSchema.statics.getAllOrders = async function (
+  filters = {},
+  page = 1,
+  limit = 20
+) {
+  const query = {};
+
+  if (filters.status) {
+    query.status = filters.status;
+  }
+
+  if (filters.startDate) {
+    query.createdAt = { $gte: new Date(filters.startDate) };
+  }
+
+  if (filters.endDate) {
+    query.createdAt = {
+      ...query.createdAt,
+      $lte: new Date(filters.endDate),
+    };
+  }
+
+  const skip = (page - 1) * limit;
+
+  const [orders, total] = await Promise.all([
+    this.find(query)
+      .populate("userId", "name email")
+      .populate("restaurantId", "name")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit)),
+    this.countDocuments(query),
+  ]);
+
+  return {
+    orders,
+    pagination: {
+      page: parseInt(page),
+      limit: parseInt(limit),
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
+
 module.exports = mongoose.model('Order', OrderSchema);

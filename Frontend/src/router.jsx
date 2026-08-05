@@ -23,6 +23,14 @@ import AdminDashboard from './pages/Admin/AdminDashboard/AdminDashboard';
 import AdminRestaurants from './pages/Admin/AdminRestaurants/AdminRestaurants';
 import AdminRestaurantCreate from './pages/Admin/AdminRestaurants/AdminRestaurantCreate';
 import AdminRestaurantEdit from './pages/Admin/AdminRestaurants/AdminRestaurantEdit';
+import AdminMenu from './pages/Admin/AdminMenu/AdminMenu';
+import AdminMenuCreate from './pages/Admin/AdminMenu/AdminMenuCreate';
+import AdminMenuEdit from './pages/Admin/AdminMenu/AdminMenuEdit';
+import AdminOrders from './pages/Admin/AdminOrders/AdminOrders';
+import AdminOrderDetails from './pages/Admin/AdminOrders/AdminOrderDetails';
+import AdminUsers from './pages/Admin/AdminUsers/AdminUsers';
+import AdminUserEdit from "./pages/Admin/AdminUserEdit/AdminUserEdit";
+import AdminReviews from './pages/Admin/AdminReviews/AdminReviews';
 
 // ============================================
 // Auth Check
@@ -152,6 +160,20 @@ export default function AppRouter() {
           <Route path="restaurants" element={<AdminRestaurants />} />
           <Route path="restaurants/create" element={<AdminRestaurantCreate />} />
           <Route path="restaurants/:id/edit" element={<AdminRestaurantEdit />} />
+
+          <Route path="restaurants/:restaurantId/menu" element={<AdminMenu />} />
+          <Route path="restaurants/:restaurantId/menu/create" element={<AdminMenuCreate />} />
+          <Route path="restaurants/:restaurantId/menu/:itemId/edit" element={<AdminMenuEdit />} />
+          
+          {/* Orders */}
+          <Route path="orders" element={<AdminOrders />} />
+          <Route path="orders/:id" element={<AdminOrderDetails />} />
+          
+          {/* Users */}
+          <Route path="users" element={<AdminUsers />} />
+          <Route path="users/:id/edit" element={<AdminUserEdit />} />
+          {/* Reviews */}
+          <Route path="reviews" element={<AdminReviews />} />
         </Route>
 
         {/* ==================== 404 ROUTE ==================== */}

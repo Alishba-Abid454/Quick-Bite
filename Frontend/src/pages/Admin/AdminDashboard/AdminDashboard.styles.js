@@ -6,7 +6,7 @@
 import styled from 'styled-components';
 
 export const DashboardContainer = styled.div`
-  padding: 20px 0;
+  padding: 20px 60px;
 `;
 
 export const DashboardHeader = styled.div`
@@ -100,8 +100,8 @@ export const RecentActivity = styled.div`
 `;
 
 export const ActivityTitle = styled.h3`
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 23px;
+  font-weight: 650;
   color: var(--text);
   margin-bottom: 16px;
 `;
@@ -127,11 +127,13 @@ export const ActivityItem = styled.div`
 `;
 
 export const ActivityItemText = styled.span`
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 450;
   color: var(--text);
 `;
 
 export const ActivityItemTime = styled.span`
-  font-size: 12px;
+  font-size: 16px;
+  font-weight: 450;
   color: var(--text-muted);
 `;
